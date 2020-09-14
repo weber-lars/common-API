@@ -1,16 +1,17 @@
 # -----------------------------------------
 # --- Common Data Model for Common API ---
 # -----------------------------------------
-# version: 1.2.1
+# version: 1.2.2
 # Specification of the data models used by several APIs. In order to avoid runtime dependencies and complexity (e.g. versioning), Common API specifications do not refer to this Common Data Model directly. Instead a current version / snapshot of the needed shared data model definition is copied for each version of the API.
 components:
-  # ---- Common Data Model v1.2.1
+  # ---- Common Data Model v1.2.2
   schemas:
     # ---- Currency ----
     Currency:
       description: ISO 4217 code
       type: string
       pattern: '[A-Z]{3}'
+      example: CHF
     # ---------
     # ---- Amount ----
     Amount:
@@ -26,6 +27,7 @@ components:
           description: amount given with fractional digits, the separator is a dot
           type: string
           pattern: '-?\d{1,14}(?:\.\d{1,3})?'
+          example: 123.45
     # --------
     # ---- Address compliant to payment address (b.Link, ISO20022)----
     structuredAddress:
@@ -40,23 +42,23 @@ components:
         streetName:
           type: string
           maxLength: 70
-          example: "Rue de la gare"
+          example: Rue de la gare
         buildingNumber:
           type: string
           maxLength: 16
-          example: "24"
+          example: 24
         postCode:
           type: string
           maxLength: 16
-          example: "2501"
+          example: 2501
         townName:
           type: string
           maxLength: 35
-          example: "Biel"
+          example: Biel
         country:
           type: string
           maxLength: 2
-          example: "CH"
+          example: CH
 
     unstructuredAddress:
       title: Unstructured Address
@@ -76,7 +78,7 @@ components:
         country:
           type: string
           maxLength: 2
-          example: "CH"
+          example: CH
 
     structuredOrUnstructuredAddress:
       title: Structured or Unstructured Address
@@ -164,7 +166,7 @@ components:
       example: '/problems/TECHNICAL_ERROR'
     # ---- End Error Response
   
-  # ---- Responses - Standard Errors Common Data Model v1.2.1----
+  # ---- Responses - Standard Errors Common Data Model v1.2.2----
   responses:
     standard400:
       headers:
@@ -172,14 +174,17 @@ components:
           schema:
             type: string
             description: 'application/problem+json; charset=utf-8 according to RFC7807'
+            example: application/problem+json
         Content-Language:
           schema:
             type: string
             description: 'Response language - always en'
+            example: en
         X-Correlation-ID:
           schema:
             type: string
             description: Client defined ID from request to correlates HTTP requests between a client and server.
+            example: f058ebd6-02f7-4d3f-942e-904344e8cde5
       description: Bad Request - The server cannot or will not process the request due to something that is perceived to be a client error as malformed request syntax.
       content:
         application/problem+json:
@@ -192,14 +197,17 @@ components:
           schema:
             type: string
             description: 'application/problem+json; charset=utf-8 according to RFC7807'
+            example: application/problem+json     
         Content-Language:
           schema:
             type: string
             description: 'Response language - always en'
+            example: en
         X-Correlation-ID:
           schema:
             type: string
             description: Client defined ID from request to correlates HTTP requests between a client and server.
+            example: f058ebd6-02f7-4d3f-942e-904344e8cde5
       description: Unauthorized - The request has not been applied because it lacks valid authentication credentials for the target resource.
       content:
         application/problem+json:
@@ -212,14 +220,17 @@ components:
           schema:
             type: string
             description: 'application/problem+json; charset=utf-8 according to RFC7807'
+            example: application/problem+json
         Content-Language:
           schema:
             type: string
             description: 'Response language - always en'
+            example: en
         X-Correlation-ID:
           schema:
             type: string
             description: Client defined ID from request to correlates HTTP requests between a client and server.
+            example: f058ebd6-02f7-4d3f-942e-904344e8cde5
       description: Forbidden - The server understood the request but refuses to authorize it. 
       content:
         application/problem+json:
@@ -232,14 +243,17 @@ components:
           schema:
             type: string
             description: 'application/problem+json; charset=utf-8 according to RFC7807'
+            example: application/problem+json
         Content-Language:
           schema:
             type: string
             description: 'Response language - always en'
+            example: en
         X-Correlation-ID:
           schema:
             type: string
             description: Client defined ID from request to correlates HTTP requests between a client and server.
+            example: f058ebd6-02f7-4d3f-942e-904344e8cde5
       description: Not Found - The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.
       content:
         application/problem+json:
@@ -252,14 +266,17 @@ components:
           schema:
             type: string
             description: 'application/problem+json; charset=utf-8 according to RFC7807'
+            example: application/problem+json
         Content-Language:
           schema:
             type: string
             description: 'Response language - always en'
+            example: en
         X-Correlation-ID:
           schema:
             type: string
             description: Client defined ID from request to correlates HTTP requests between a client and server.
+            example: f058ebd6-02f7-4d3f-942e-904344e8cde5
       description: Method Not Allowed - The method received in the request-line is known by the origin server but not supported by the target resource.
       content:
         application/problem+json:
@@ -272,14 +289,17 @@ components:
           schema:
             type: string
             description: 'application/problem+json; charset=utf-8 according to RFC7807'
+            example: application/problem+json
         Content-Language:
           schema:
             type: string
             description: 'Response language - always en'
+            example: en
         X-Correlation-ID:
           schema:
             type: string
             description: Client defined ID from request to correlates HTTP requests between a client and server.
+            example: f058ebd6-02f7-4d3f-942e-904344e8cde5
       description: Internal Server Error - The server encountered an unexpected condition that prevented it from fulfilling the request.
       content:
         application/problem+json:
@@ -292,14 +312,17 @@ components:
           schema:
             type: string
             description: 'application/problem+json; charset=utf-8 according to RFC7807'
+            example: application/problem+json
         Content-Language:
           schema:
             type: string
             description: 'Response language - always en'
+            example: en
         X-Correlation-ID:
           schema:
             type: string
             description: Client defined ID from request to correlates HTTP requests between a client and server.
+            example: f058ebd6-02f7-4d3f-942e-904344e8cde5
       description: Not Implemented - The server does not support the functionality required to fulfill the request.
       content:
         application/problem+json:
@@ -312,14 +335,17 @@ components:
           schema:
             type: string
             description: 'application/problem+json; charset=utf-8 according to RFC7807'
+            example: application/problem+json
         Content-Language:
           schema:
             type: string
             description: 'Response language - always en'
+            example: en
         X-Correlation-ID:
           schema:
             type: string
             description: Client defined ID from request to correlates HTTP requests between a client and server.
+            example: f058ebd6-02f7-4d3f-942e-904344e8cde5
       description: Service Unavailable. The server is currently unable to handle the request due to a temporary overload or scheduled maintenance.
       content:
         application/problem+json:
