@@ -1,6 +1,6 @@
 openapi: "3.0.0"
 info:
-  version: 1.1.5
+  version: 2.1.1
   title: Common Mortgage API (Public)
   description:
     This specification defines a common mortgage API for mortgages as used in Switzerland. The API is supposed to be used by requesting parties who want to get, extend, or transfer mortgages from and to financial institutions.
@@ -713,6 +713,7 @@ paths:
                    - property_flyer
                    - property_pictures
                    - proof_of_interest
+                   - prospect_authorization
                    - other
                   example: tax_declaration
                 fileContent:
@@ -1987,7 +1988,13 @@ components:
       required:
         - offerItemId
         - product
+        - trancheId
       properties:
+        trancheId:
+          type: string
+          format: uuid
+          description: Uuid of the tranche
+          example: 51b017e1-5e59-4b58-a0a0-c638c87db463
         offerItemId:
           type: string
           example: bankx-offer-35465
@@ -2219,6 +2226,11 @@ components:
           items:
             type: object
             properties:
+              trancheId:
+                type: string
+                format: uuid
+                description: Uuid of the tranche
+                example: 51b017e1-5e59-4b58-a0a0-c638c87db463
               productId:
                 type: string
                 format: uuid
