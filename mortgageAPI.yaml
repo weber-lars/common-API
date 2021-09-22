@@ -319,6 +319,62 @@ paths:
           $ref: '#/components/responses/standard501'
         '503':
           $ref: '#/components/responses/standard503'
+    get:
+      summary: Get a list of all mortgage applications
+      description: Get a complete overview of all available applications sorted by TO_BE_DEFINED
+      tags:
+        - Mortgage Application
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+            example: accepted
+            enum:
+              - accepted
+              - rejected
+              - pending
+          description: The status of the application (for filtering)
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/clientid_in_header'
+        - $ref: '#/components/parameters/correlation_in_header'
+        - $ref: '#/components/parameters/agent_in_header'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ApplicationList:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Application'
+                  _links:
+                    $ref: '#/components/schemas/linksPagination'
+          headers:
+            X-Correlation-ID:
+              schema:
+                type: string
+              description: Reflects the ID (set by the caller) from the request.
+        '400':
+          $ref: '#/components/responses/standard400'
+        '401':
+          $ref: '#/components/responses/standard401'
+        '403':
+          $ref: '#/components/responses/standard403'
+        '404':
+          $ref: '#/components/responses/standard404'
+        '405':
+          $ref: '#/components/responses/standard405'
+        '500':
+          $ref: '#/components/responses/standard500'
+        '501':
+          $ref: '#/components/responses/standard501'
+        '503':
+          $ref: '#/components/responses/standard503'
 
   /mortgages/applications/required-information:
     get:
@@ -2271,6 +2327,10 @@ components:
               example: '+41443343456'
             address:
               $ref: '#/components/schemas/structuredAddress'
+        createDate:
+          $ref: '#/components/schemas/DateTime'
+        lastChangeDate:
+          $ref: '#/components/schemas/DateTime'
     # ---------
 
     # ---- Financing Request ----
