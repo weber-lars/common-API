@@ -1621,6 +1621,20 @@ components:
       example: '/problems/TECHNICAL_ERROR'
     # ---- End Error Response
     # ---- End Common Data Model
+    
+    # ---- Unique and common object identifier ----
+    
+    ApplicantId:
+      type: string
+      format: uuid
+      description: 'UUID v4 of the applicant (to be defined by TPP)'
+      example: '576f8de3-6b30-4882-a7af-da2132a456cf'
+      
+    ApplicationId:
+      type: string
+      format: uuid
+      description: 'The application identifier (UUID v4) defined by FI.'
+      example: 'f157c4be-106d-4304-972e-091e77b87e1c'
 
     # ---- Property Object ----
     PropertyObject:
@@ -2142,10 +2156,7 @@ components:
         - propertyInformation
       properties:
         applicationId:
-          type: string
-          format: uuid
-          description: 'The application identifier (UUID v4) defined by FI.'
-          example: 'f157c4be-106d-4304-972e-091e77b87e1c'
+          $ref: '#/components/schemas/ApplicationId'
         tppApplicationId:
           type: string
           description: 'The application alphanumeric identifier defined by TPP'
@@ -2215,10 +2226,7 @@ components:
           example: 2e1d21c3-0cd5-4354-a9e9-d2eb2c28b780
           description: Uuid v4 of the financing request defined by FI
         applicationId:
-          type: string
-          format: uuid
-          example: 3c921870-f29c-46ad-9ba5-c8b05e0d88d2
-          description: Uuid v4 of the corresponding application
+          $ref: '#/components/schemas/ApplicationId'
         amount:
           $ref: '#/components/schemas/Amount'
         tranches:
@@ -2260,10 +2268,7 @@ components:
         - applicantDetail
       properties:
         applicantId:
-          type: string
-          format: uuid
-          description: UUID v4 of the applicant (to be defined by TPP)
-          example: 576f8de3-6b30-4882-a7af-da2132a456cf
+          $ref: '#/components/schemas/ApplicantId'
         applicantType:
           type: string
           example: individual
@@ -2287,6 +2292,11 @@ components:
               $ref: '#/components/schemas/structuredAddress'
             birthDate:
               $ref: '#/components/schemas/Date'
+            hometown:
+              type: string
+              maxLength: 35
+              example: Basel
+              description: Hometown of the applicant
             maritalStatus:
               type: string
               example: married
@@ -2297,6 +2307,11 @@ components:
               - divorced
               - widowed
               - registered-partnership
+            consentingApplicant:
+              description: The consenting applicant. Required if maritalStatus married is set.
+              oneOf:
+              - $ref: '#/components/schemas/ConsentingApplicant'
+              - $ref: '#/components/schemas/ApplicantId'
             matrimonialPropertyScheme:
               type: string
               example: separateEstate
@@ -2314,7 +2329,9 @@ components:
               - unemployed
               - retired
             nationality:
-              $ref: '#/components/schemas/Country'
+              type: array
+              items:
+                $ref: '#/components/schemas/Country'
             USPerson:
               type: boolean
               description: Is the applicant a US person?
@@ -2323,6 +2340,14 @@ components:
               type: string
               description: Email of the applicant
               example: max.muster@domain.ch
+            mobileNumber:
+              type: string
+              description: Mobile number of the applicant
+              example: '+41443343456'
+            phoneNumber:
+              type: string
+              description: Phone number of the applicant
+              example: '+41443343456'
             applicantLanguage:
               type: string
               example: fr
@@ -2369,6 +2394,25 @@ components:
               items:
                 $ref: '#/components/schemas/Asset'
     # ---------
+    
+    # ---- Consenting Applicant ----
+    ConsentingApplicant:
+      description: The consenting applicant (spouse).
+      type: object
+      required:
+        - name
+        - surName
+      properties:
+        name:
+          type: string
+          maxLength: 70
+          description: Name of the consenting applicant (spouse)
+          example: Muster
+        surName:
+          type: string
+          maxLength: 70
+          description: Surname of the consenting applicant (spouse)
+          example: Max
 
     # ---- Mortgage data types ----
     PropertyObjectRatingType:
@@ -2475,9 +2519,7 @@ components:
           format: uuid
           example: ef25ce8b-2fb1-45d9-bae0-6f263241a280
         applicationId:
-          type: string
-          format: uuid
-          example: 59e8c8a6-4d32-4e7b-bcf0-05813029498e
+          $ref: '#/components/schemas/ApplicationId'
         amount:
           $ref: '#/components/schemas/Amount'
         offeredInterest:
