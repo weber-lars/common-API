@@ -1911,6 +1911,11 @@ components:
           $ref: '#/components/schemas/structuredAddress'
         propertyIdentifier:
           $ref: '#/components/schemas/PropertyIdentifier'
+        propertyTypeInformation:
+          description: The consenting applicant. Required if maritalStatus married is set.
+          oneOf:
+          - $ref: '#/components/schemas/PropertyDetachedHouse'
+          - $ref: '#/components/schemas/PropertyResidentialFlat'
         propertyConstructionInformation:
           type: object
           description: 'The property construction information.'
@@ -2004,107 +2009,6 @@ components:
               type: integer
               description: 'The number of underground parking places.'
               example: 2
-        propertyFlatInformation:
-          type: object
-          description: 'The property flat information.'
-          properties:
-            numberOfFlats:
-              type: integer
-              description: 'The number of flats in the building.'
-              example: 10
-            numberOfFloors:
-              type: integer
-              description: 'The number of floors in the building.'
-              example: 4
-            stateApartmentType:
-              $ref: '#/components/schemas/PropertyObjectRatingType'
-            floor:
-              type: integer
-              description: 'The floor of the flat.'
-              example: 2
-            balconyOrTerraceArea:
-              type: integer
-              description: 'The area of the balcony or terrace in quatermeter.'
-              example: 20
-            livingSpace:
-              type: object
-              properties:
-                livingSpaceInSqm:
-                  type: integer
-                  description: 'The area of the living space in quatermeter.'
-                  example: 120
-                measurementStandard:
-                  type: string
-                  enum: [nla, gfa]
-                  description: 'The measurement standard used to determine the living space (nla or gfa).'
-                  example: 'nla'
-            multistorey:
-              type: boolean
-              description: 'If the flat is multistorey true, else false.'
-              example: false
-            otherFeatures:
-              type: array
-              items:
-                type: string
-                enum: [coowned_garden_terrace_room, coowned_indoor_pool, coowned_outdoor_pool, whirlpool_sauna, heated_conservatory, unheated_conservatory, security_system, chimney, elevator_in_stairwell, elevator_into_apartment, ventilation_system_without_mingergie, barrier-free_living, automated_building_control]
-                description: 'Additional features and services.'
-                example: 'coowned_outdoor_pool'
-            quote:
-              type: integer
-              description: 'The quote of the flat property against the whole building property.'
-              example: 120
-            apartmentType:
-              type: string
-              enum: [garden_flat, floor_flat, roof_flat, attic]
-              description: 'The type of the appartment (floor, garden level, storey).'
-              example: 'floor_flat'
-            locationInTheBuildingRating:
-              $ref: '#/components/schemas/PropertyObjectRatingType'
-        propertyBuildingInformation:
-          type: object
-          description: 'The property building information.'
-          properties:
-            livingSpace:
-              type: object
-              properties:
-                livingSpaceInSqm:
-                  type: integer
-                  description: 'The area of the living space in quatermeter.'
-                  example: 120
-                measurementStandard:
-                  type: string
-                  enum: [nla, gfa]
-                  description: 'The measurement standard used to determine the living space (nla or gfa).'
-                  example: 'nla'
-            roofFloorExpandable:
-              type: boolean
-              description: 'If the roof floor is expandable true, else false.'
-              example: false
-            volumeIncludingGarage:
-              type: integer
-              description: 'The volume of the house including the garage.'
-              example: 1500
-            landArea:
-              type: integer
-              description: 'The surface area of the land.'
-              example: 2000
-            otherFeatures:
-              type: array
-              items:
-                type: string
-                enum: [ventilation_system_without_mingergie, barrier-free_living, automated_building_control]
-                description: 'Additional features and services.'
-                example: 'outdoor_pool'
-            houseType:
-              type: string
-              enum: [detached_house, semidetached_house, row_house, row_corner_house, terrace_house]
-              description: 'The type of the house.'
-              example: 'detached_house'
-            normType:
-              type: string
-              enum: [building_insurance, sia116, sia416, other]
-              description: 'The norm type.'
-              example: 'building_insurance'
         valueRelevantServitudes:
           type: boolean
           description: 'If the property has servitudes true, else false.'
@@ -2144,6 +2048,113 @@ components:
           $ref: '#/components/schemas/Date'
         remarks:
           type: string
+    # ---------
+    
+    # ---- Property Detached House ----
+    PropertyDetachedHouse:
+      description: Property of type detached house
+      type: object
+      properties:
+        livingSpace:
+          type: object
+          properties:
+            livingSpaceInSqm:
+              type: integer
+              description: 'The area of the living space in quatermeter.'
+              example: 120
+            measurementStandard:
+              type: string
+              enum: [nla, gfa]
+              description: 'The measurement standard used to determine the living space (nla or gfa).'
+              example: 'nla'
+        roofFloorExpandable:
+          type: boolean
+          description: 'If the roof floor is expandable true, else false.'
+          example: false
+        volumeIncludingGarage:
+          type: integer
+          description: 'The volume of the house including the garage.'
+          example: 1500
+        landArea:
+          type: integer
+          description: 'The surface area of the land.'
+          example: 2000
+        otherFeatures:
+          type: array
+          items:
+            type: string
+            enum: [ventilation_system_without_mingergie, barrier-free_living, automated_building_control]
+            description: 'Additional features and services.'
+            example: 'outdoor_pool'
+        houseType:
+          type: string
+          enum: [detached_house, semidetached_house, row_house, row_corner_house, terrace_house]
+          description: 'The type of the house.'
+          example: 'detached_house'
+        normType:
+          type: string
+          enum: [building_insurance, sia116, sia416, other]
+          description: 'The norm type.'
+          example: 'building_insurance'
+    # ---------
+    
+    # ---- Property Residential Flat ----
+    PropertyResidentialFlat:
+      description: Property of residential flat
+      type: object
+      properties:
+        numberOfFlats:
+          type: integer
+          description: 'The number of flats in the building.'
+          example: 10
+        numberOfFloors:
+          type: integer
+          description: 'The number of floors in the building.'
+          example: 4
+        stateApartmentType:
+          $ref: '#/components/schemas/PropertyObjectRatingType'
+        floor:
+          type: integer
+          description: 'The floor of the flat.'
+          example: 2
+        balconyOrTerraceArea:
+          type: integer
+          description: 'The area of the balcony or terrace in quatermeter.'
+          example: 20
+        livingSpace:
+          type: object
+          properties:
+            livingSpaceInSqm:
+              type: integer
+              description: 'The area of the living space in quatermeter.'
+              example: 120
+            measurementStandard:
+              type: string
+              enum: [nla, gfa]
+              description: 'The measurement standard used to determine the living space (nla or gfa).'
+              example: 'nla'
+        multistorey:
+          type: boolean
+          description: 'If the flat is multistorey true, else false.'
+          example: false
+        otherFeatures:
+          type: array
+          items:
+            type: string
+            enum: [coowned_garden_terrace_room, coowned_indoor_pool, coowned_outdoor_pool, whirlpool_sauna, heated_conservatory, unheated_conservatory, security_system, chimney, elevator_in_stairwell, elevator_into_apartment, ventilation_system_without_mingergie, barrier-free_living, automated_building_control]
+            description: 'Additional features and services.'
+            example: 'coowned_outdoor_pool'
+        quote:
+          type: integer
+          description: 'The quote of the flat property against the whole building property.'
+          example: 120
+        apartmentType:
+          type: string
+          enum: [garden_flat, floor_flat, roof_flat, attic]
+          description: 'The type of the appartment (floor, garden level, storey).'
+          example: 'floor_flat'
+        locationInTheBuildingRating:
+          $ref: '#/components/schemas/PropertyObjectRatingType'
     # ---------
 
     # ---- Property Identifier ----
