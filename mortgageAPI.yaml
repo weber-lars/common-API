@@ -705,17 +705,6 @@ paths:
               properties:
                 documentType:
                   $ref: '#/components/schemas/DocumentType'
-					   
-									  
-									
-									   
-							 
-								   
-									  
-									  
-										   
-						  
-										  
                 fileContent:
                   type: string
                   format: binary
@@ -1093,7 +1082,7 @@ paths:
       summary: Get the details of a financing request
       description: Get a specific financing request based on the financingRequestId
       tags:
-        - Mortgage FinancingRequest
+        - Mortgage Financing Request
       parameters:
         - in: path
           name: applicationId
@@ -1122,10 +1111,8 @@ paths:
               schema:
                 type: object
                 properties:
-                  offerList:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/FinancingRequest'
+                  application:
+                    $ref: '#/components/schemas/FinancingRequest'
           headers:
             X-Correlation-ID:
               schema:
@@ -1766,7 +1753,6 @@ components:
       type: string
       format: date
       example: 2018-04-13
-
     DateTime:
       type: string
       format: date-time
@@ -2314,7 +2300,6 @@ components:
       type: object
       required:
         - duration
-			  
       properties:
         duration:
           type: integer
@@ -2743,13 +2728,11 @@ components:
       enum: [bad, bad-medium, medium, medium-good, good, good-verygood, verygood]
       description: 'The rating type.'
       example: 'good'
-
     CommonID:
       description: "The unique identifier UUID v4 specified by RFC4122."
       type: string
       format: uuid
       example: f81d4fae-7dec-11d0-a765-00a0c91e6bf6
-
     AssetType:
       description: Common set of asset types.
       type: string
@@ -2768,23 +2751,19 @@ components:
         - vested_benefit
         - life_insurance_3a
         - life_insurance_3b
-
     AssetUsageType:
       description: Common set of asset usage types.
       type: string
       example: pledged
-					
       enum:
         - pledged
         - withdraw
-
     Asset:
       description: Asset information.
       type: object
       required:
         - assetType
         - amount
-				   
       properties:
         assetType:
           $ref: '#/components/schemas/AssetType'
@@ -2897,8 +2876,6 @@ components:
       type: object
       required:
         - offerId
-				
-						 
       properties:
         orderId:
           type: string
@@ -2914,7 +2891,7 @@ components:
           format: uuid
           example: ef25ce8b-2fb1-45d9-bae0-6f263241a280
         applicationId:
-          $ref: '#/components/schemas/ApplicationId'										   
+          $ref: '#/components/schemas/ApplicationId'
         validateOnly:
           type: boolean
           description: The order will not be persistent in the FI backend.
@@ -2923,9 +2900,6 @@ components:
           type: string
           example: All documents verified at TPP
           description: Remark/comment which can be added by TPP
-
-				   
-						  
     # ---------
 
     # ---- Document ----
@@ -3067,7 +3041,6 @@ components:
       schema:
         type: string
         example: cursorIDxyz
-
   # ---- Responses - Standard Errors Common Data Model v1.2.2----
   responses:
     standard400:
@@ -3092,7 +3065,6 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/commonErrorResponse'
-
     standard401:
       headers:
         Content-Type:
@@ -3115,7 +3087,6 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/commonErrorResponse'
-
     standard403:
       headers:
         Content-Type:
@@ -3138,7 +3109,6 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/commonErrorResponse'
-
     standard404:
       headers:
         Content-Type:
@@ -3161,7 +3131,6 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/commonErrorResponse'
-
     standard405:
       headers:
         Content-Type:
@@ -3184,7 +3153,6 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/commonErrorResponse'
-
     standard500:
       headers:
         Content-Type:
@@ -3207,7 +3175,6 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/commonErrorResponse'
-
     standard501:
       headers:
         Content-Type:
@@ -3230,7 +3197,6 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/commonErrorResponse'
-
     standard503:
       headers:
         Content-Type:
