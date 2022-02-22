@@ -348,7 +348,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  ApplicationList:
+                  applicationList:
                     type: array
                     items:
                       $ref: '#/components/schemas/Application'
