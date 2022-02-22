@@ -2660,6 +2660,11 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Asset'
+        solvency:
+          type: object
+          properties:
+            creditScore:
+              $ref: '#/components/schemas/CreditScore'
     # ---------
 
     # ---- Mortgage data types ----
@@ -2874,6 +2879,36 @@ components:
         modifyDate:
           $ref: '#/components/schemas/Date'
     # ---------
+    
+    # ---- CreditScore ----
+    CreditScore:
+      required: 
+        - value
+      properties: 
+        value: 
+          type: string
+          enum: [A, B, C, D, E]
+          description: >
+            Creditworthiness score value:
+             * A - Very high - Impeccable - Grant credit
+             * B - High - Good -Grant credit
+             * C - Medium - Sluggish - Obtain legal collections information
+             * D - Low - Very Bad - Do not grant credit
+             * E - Very Low - Bad - Do not grant credit
+        numericValue:
+          type: integer
+          minimum: 0
+          maximum: 1000
+          description: The creditworthiness numeric score.
+        description:
+          type: string
+          description: The description of the score value.
+        scoreTimeStamp:
+          type: string
+          format: date-time
+          description: Last update of the score value, the date format as defined by date - [RFC3339](https://tools.ietf.org/html/rfc3339).
+    # ---------
+    
     # ---- AssetProvider ----
     AssetProvider:
       description: Asset provider for each asset, additional information must be transfered. E.g. in case the applicant owns an addtional security of type insurance, insurance company name is provided
