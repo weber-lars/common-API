@@ -1082,7 +1082,7 @@ paths:
       summary: Get the details of a financing request
       description: Get a specific financing request based on the financingRequestId
       tags:
-        - Mortgage FinancingRequest
+        - Mortgage Financing Request
       parameters:
         - in: path
           name: applicationId
@@ -1111,10 +1111,8 @@ paths:
               schema:
                 type: object
                 properties:
-                  offerList:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/FinancingRequest'
+                  financingRequest:
+                    $ref: '#/components/schemas/FinancingRequest'
           headers:
             X-Correlation-ID:
               schema:
