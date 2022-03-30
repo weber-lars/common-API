@@ -2243,6 +2243,10 @@ components:
           $ref: '#/components/schemas/Amount'
         validTo:
           $ref: '#/components/schemas/Date'
+        expiredPrematurely:
+          type: boolean
+          example: false
+          description: An offer may expire prematurely if value-relevant information on the dossier has been subsequently changed.
         offerItems:
           type: array
           items:
